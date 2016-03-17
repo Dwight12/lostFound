@@ -12,6 +12,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @Repository      添加注解
  * @Modifying       说明该方法是修改操作
@@ -33,4 +36,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             @Param("qLastName") String qLastName,
             @Param("qPassword") String password,
             @Param("qId") Integer id);
+
 }

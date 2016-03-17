@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SpringMVC 用户管理</title>
+    <title>用户管理</title>
 
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -25,7 +25,7 @@
     <hr/>
 
     <h3>所有用户 <a href="/addUser" type="button" class="btn btn-primary btn-sm">添加</a></h3>
-
+    <h3>登录 <a href="/login" type="button" class="btn btn-primary btn-sm">登录</a></h3>
     <!-- 如果用户列表为空 -->
     <c:if test="${empty userList}">
         <div class="alert alert-warning" role="alert">

@@ -1,14 +1,13 @@
 package Kikyou.controller;
 
+import Kikyou.model.BlogEntity;
 import Kikyou.model.UserEntity;
+import Kikyou.repository.BlogRepository;
 import Kikyou.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +26,10 @@ public class MyController {
 
     @Autowired
     private UserRepository userRepository;
+    //卧槽对每个变量都得加上Autowired不然就报HTTP Status 500 - Request processing failed;
+    //nested exception is java.lang.NullPointerException
+    @Autowired
+    private BlogRepository blogRepository;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -96,5 +99,44 @@ public class MyController {
         userRepository.flush();
 
         return "redirect:/users";
+    }
+
+    @RequestMapping(value="/login", method=RequestMethod.GET)
+    public String login() {return "login";}
+
+    @RequestMapping(value="/login", method=RequestMethod.POST)
+    public String loginPost(UserEntity userEntity) {
+        String username = userEntity.getNickname();
+        String password = userEntity.getPassword();
+
+        List<UserEntity> userEntityList = userRepository.findAll();
+
+        for (UserEntity u: userEntityList
+             ) { if (u.getNickname().equals(username) && u.getPassword().equals(password))
+                    return "success";
+        }
+
+        return "error";
+    }
+
+    @RequestMapping(value = "/showBlog", method = RequestMethod.GET)
+    public String showBlog(ModelMap modelMap){
+
+        List<BlogEntity> blogEntityList = blogRepository.findAll();
+        modelMap.addAttribute("blogList", blogEntityList);
+
+        return "showBlog";
+    }
+
+    @RequestMapping(value = "/addBlog", method = RequestMethod.GET)
+    public String addBlog(){
+        return "addBlog";
+    }
+
+    @RequestMapping(value = "/addBlogPost", method = RequestMethod.POST)
+    public String addBlogPost(@ModelAttribute("blog") BlogEntity blogEntity){
+
+        blogRepository.saveAndFlush(blogEntity);
+        return "redirect:/showBlog";
     }
 }
