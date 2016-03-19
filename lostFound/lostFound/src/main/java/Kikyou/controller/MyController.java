@@ -4,12 +4,15 @@ import Kikyou.model.BlogEntity;
 import Kikyou.model.UserEntity;
 import Kikyou.repository.BlogRepository;
 import Kikyou.repository.UserRepository;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -23,6 +26,7 @@ import java.util.List;
  */
 
 @Controller
+@SessionAttributes("user")
 public class MyController {
 
     @Autowired
@@ -59,21 +63,17 @@ public class MyController {
         return "redirect:/users";
     }
 
-    @RequestMapping(value = "/showUser/{userId}", method = RequestMethod.GET)
-    public String showUser(@PathVariable("userId")  Integer userId, ModelMap modelMap ){
-
-        UserEntity userEntity = userRepository.findOne(userId);
-        modelMap.addAttribute("user", userEntity);
+    @RequestMapping(value = "/showUser", method = RequestMethod.GET)
+    public String showUser(@ModelAttribute("user") UserEntity userEntity){
+        //@PathVariable("userId")  Integer userId, ModelMap modelMap
+        //UserEntity userEntity = userRepository.findOne(userId);
+        //modelMap.addAttribute("user", userEntity);
 
         return "user/userDetail";
     }
 
-    @RequestMapping(value = "/updateUser/{userId}", method = RequestMethod.GET)
-    public String updateUser(@PathVariable("userId")  Integer userId, ModelMap modelMap){
-
-        UserEntity userEntity = userRepository.findOne(userId);
-
-        modelMap.addAttribute("user", userEntity);
+    @RequestMapping(value = "/updateUser", method = RequestMethod.GET)
+    public String updateUser(@ModelAttribute("user") UserEntity userEntity){
 
         return "user/updateUser";
 
@@ -91,23 +91,24 @@ public class MyController {
         );
 
         userRepository.flush();
-        return "redirect:/users";
+        return "user/userDetail";
     }
 
-    @RequestMapping(value = "/deleteUser/{userId}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("userId") Integer userId){
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    public String deleteUser(@ModelAttribute("user") UserEntity userEntity){
 
-        userRepository.delete(userId);
+        userRepository.delete(userEntity.getId());
         userRepository.flush();
 
-        return "redirect:/users";
+        return "redirect:/register/login";
     }
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
     public String login() {return "register/login";}
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
-    public String loginPost(UserEntity userEntity) {
+    public String loginPost(UserEntity userEntity, ModelMap modelMap) {
+
 
         String username = userEntity.getNickname();
         String password = userEntity.getPassword();
@@ -117,6 +118,11 @@ public class MyController {
         for (UserEntity u: userEntityList
              ) {
             if (u.getNickname().equals(username) && u.getPassword().equals(password)) {
+
+                modelMap.addAttribute("user",u);
+                List<BlogEntity> blogEntityList = blogRepository.findAll();
+                modelMap.addAttribute("blogList", blogEntityList);
+
                 return "register/success";
             }
 
@@ -125,14 +131,24 @@ public class MyController {
         return "register/error";
     }
 
-    @RequestMapping(value = "/showBlog", method = RequestMethod.GET)
-    public String showBlog(ModelMap modelMap){
+
+    @RequestMapping(value = "/showBlog" , method = RequestMethod.GET)
+    public String showBlog(ModelMap modelMap,
+                           @ModelAttribute("user") UserEntity userEntity){
+
+            List<BlogEntity> blogEntityList = blogRepository.findAll();
+            modelMap.addAttribute("blogList", blogEntityList);
+        return "blog/showBlog";
+    }
+
+    @RequestMapping(value = "/tourists" , method = RequestMethod.GET)
+    public String showBlogForTourists(ModelMap modelMap){
 
         List<BlogEntity> blogEntityList = blogRepository.findAll();
         modelMap.addAttribute("blogList", blogEntityList);
-
-        return "blog/showBlog";
+        return "blog/tourists";
     }
+
 
     @RequestMapping(value = "/addBlog", method = RequestMethod.GET)
     public String addBlog(){
@@ -140,12 +156,29 @@ public class MyController {
     }
 
     @RequestMapping(value = "/addBlogPost", method = RequestMethod.POST)
-    public String addBlogPost(@ModelAttribute("blog") BlogEntity blogEntity){
+    public String addBlogPost(@ModelAttribute("blog") BlogEntity blogEntity,
+                              @ModelAttribute("user") UserEntity userEntity){
         //blog表里的总数再加上1
         blogEntity.setId((int) (blogRepository.count()+1));
         //本来应该由session中获得登录ID的……不能写死
-        blogEntity.setUserByUserId(userRepository.findOne(3));
+        blogEntity.setUserByUserId(userRepository.findOne(userEntity.getId()));
+
+
+        String  dateStringToParse  =  "2016-03-20";
+        java.util.Date  date  = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStringToParse);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        java.sql.Date  sqlDate  =  new java.sql.Date(date.getTime());
+
+        blogEntity.setPubDate(sqlDate);
+
         blogRepository.saveAndFlush(blogEntity);
         return "redirect:/showBlog";
     }
+
 }
+
+

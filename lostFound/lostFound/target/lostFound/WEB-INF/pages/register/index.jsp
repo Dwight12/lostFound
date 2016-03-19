@@ -24,7 +24,7 @@
 
     <h3>login <a href="/login" type="button" class="btn btn-primary btn-sm">login</a></h3>
     <hr/>
-    <h3>show <a href="/showBlog" type="button" class="btn btn-primary btn-sm">show</a></h3>
+    <h3>show <a href="/tourists" type="button" class="btn btn-primary btn-sm">show</a></h3>
 </div>
 
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>

@@ -33,10 +33,6 @@
             <input type="text" class="form-control" id="content" name="content" placeholder="Enter Content:"/>
         </div>
         <div class="form-group">
-            <label for="pubDate">PubDate:</label>
-            <input type="text" class="form-control" id="pubDate" name="pubDate" placeholder="Enter PubDate:"/>
-        </div>
-        <div class="form-group">
             <button type="submit" class="btn btn-sm btn-success">提交</button>
         </div>
     </form:form>

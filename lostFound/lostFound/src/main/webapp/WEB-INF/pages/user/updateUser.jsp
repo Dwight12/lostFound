@@ -26,7 +26,7 @@
 
     <form:form action="/updateUserPost" method="post" commandName="userP" role="form">
         <div class="form-group">
-            <label for="firstName">Nickname:</label>
+            <label for="nickname">Nickname:</label>
             <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Enter Nickname:"
                    value="${user.nickname}"/>
         </div>

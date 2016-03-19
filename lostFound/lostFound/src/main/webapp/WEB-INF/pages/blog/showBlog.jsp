@@ -23,8 +23,17 @@
 <div class="container">
     <h1>blog</h1>
     <hr/>
+    <c:if test="${empty user.id}">
+        <h3>login <a href="/login" type="button" class="btn btn-primary btn-sm">login</a></h3>
+    </c:if>
+    <c:if test="${!empty user.id}">
+        <h3>
+            <a href="/showUser" type="button" class="btn btn-sm btn-success">详情</a>
+            <a href="/updateUser" type="button" class="btn btn-sm btn-warning">修改</a>
+            <a href="/deleteUser" type="button" class="btn btn-sm btn-danger">删除</a>
+        </h3>
+    </c:if>
 
-    <h3>login <a href="/login" type="button" class="btn btn-primary btn-sm">login</a></h3>
     <!-- 如果用户列表为空 -->
     <c:if test="${empty blogList}">
         <div class="alert alert-warning" role="alert">
@@ -51,6 +60,10 @@
                 </tr>
             </c:forEach>
         </table>
+    </c:if>
+
+    <c:if test="${!empty user.id}">
+        <h3>add <a href="/addBlog" type="button" class="btn btn-primary btn-sm">add</a></h3>
     </c:if>
 </div>
 

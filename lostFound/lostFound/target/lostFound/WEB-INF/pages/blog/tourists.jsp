@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: dwight12
-  Date: 2016/3/17
-  Time: 16:12
+  Date: 2016/3/20
+  Time: 1:36
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -23,17 +23,6 @@
 <div class="container">
     <h1>blog</h1>
     <hr/>
-    <c:if test="${empty user.id}">
-        <h3>login <a href="/login" type="button" class="btn btn-primary btn-sm">login</a></h3>
-    </c:if>
-    <c:if test="${!empty user.id}">
-        <h3>
-            <a href="/showUser" type="button" class="btn btn-sm btn-success">详情</a>
-            <a href="/updateUser" type="button" class="btn btn-sm btn-warning">修改</a>
-            <a href="/deleteUser" type="button" class="btn btn-sm btn-danger">删除</a>
-        </h3>
-    </c:if>
-
     <!-- 如果用户列表为空 -->
     <c:if test="${empty blogList}">
         <div class="alert alert-warning" role="alert">
@@ -61,13 +50,10 @@
             </c:forEach>
         </table>
     </c:if>
-
-    <c:if test="${!empty user.id}">
-        <h3>add <a href="/addBlog" type="button" class="btn btn-primary btn-sm">add</a></h3>
-    </c:if>
 </div>
 
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
+
