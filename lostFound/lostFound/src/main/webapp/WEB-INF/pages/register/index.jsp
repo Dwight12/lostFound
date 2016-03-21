@@ -18,13 +18,19 @@
 
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
+    <style>
+        .right{float:right}
+    </style>
 </head>
 <body>
 <div class="container">
-
-    <h3>login <a href="/login" type="button" class="btn btn-primary btn-sm">login</a></h3>
-    <hr/>
-    <h3>show <a href="/tourists" type="button" class="btn btn-primary btn-sm">show</a></h3>
+    <div class="right">
+        <h3>
+            <a href="/login" type="button" class="btn btn-primary btn-sm">login</a>
+            <a href="/addUser" type="button" class="btn btn-primary btn-sm">add</a>
+        </h3>
+    </div>
+    <jsp:include page="/tourists" flush="true"/>
 </div>
 
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>

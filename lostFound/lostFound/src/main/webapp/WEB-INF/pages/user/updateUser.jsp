@@ -14,14 +14,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>更新用户</title>
+    <title>update</title>
 
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 </head>
 <body>
 <div class="container">
-    <h1>更新用户信息</h1>
+    <h1>update</h1>
     <hr/>
 
     <form:form action="/updateUserPost" method="post" commandName="userP" role="form">

@@ -18,15 +18,24 @@
 
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
+    <style>
+        .right{float:right}
+    </style>
 </head>
 <body>
 <div class="container">
-    <h1>success</h1>
-    <hr/>
-    <h3><a href="/showUser" type="button" class="btn btn-sm btn-success">详情</a></h3>
-    <h3><a href="/updateUser" type="button" class="btn btn-sm btn-warning">修改</a></h3>
-    <h3><a href="/deleteUser" type="button" class="btn btn-sm btn-danger">删除</a></h3>
-    <h3><a href="/showBlog" type="button" class="btn btn-sm btn-danger">show</a></h3>
+    <div class="right">
+        <h3>
+            <c:if test="${user.id == 1}">
+                <a href="/users" type="button" class="btn btn-primary btn-sm">userManagement</a></h3>
+            </c:if>
+            <a href="/showUser" type="button" class="btn btn-sm btn-success">detail</a>
+            <a href="/updateUser" type="button" class="btn btn-sm btn-warning">update</a>
+            <a href="/deleteUser" type="button" class="btn btn-sm btn-danger">delete</a>
+            <a href="/showBlog" type="button" class="btn btn-sm btn-danger">showBlog</a>
+        </h3>
+    </div>
+
 </div>
 
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>

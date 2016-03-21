@@ -34,7 +34,7 @@
     <c:if test="${!empty blogList}">
         <table class="table table-bordered table-striped">
             <tr>
-                <th>ID</th>
+                <th>NickName</th>
                 <th>Title</th>
                 <th>Content</th>
                 <th>PubDate</th>
@@ -42,7 +42,7 @@
 
             <c:forEach items="${blogList}" var="blog">
                 <tr>
-                    <td>${blog.id}</td>
+                    <td>${blog.userByUserId.nickname}</td>
                     <td>${blog.title}</td>
                     <td>${blog.content}</td>
                     <td>${blog.pubDate}</td>

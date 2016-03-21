@@ -28,9 +28,9 @@
     </c:if>
     <c:if test="${!empty user.id}">
         <h3>
-            <a href="/showUser" type="button" class="btn btn-sm btn-success">详情</a>
-            <a href="/updateUser" type="button" class="btn btn-sm btn-warning">修改</a>
-            <a href="/deleteUser" type="button" class="btn btn-sm btn-danger">删除</a>
+            <a href="/showUser" type="button" class="btn btn-sm btn-success">detail</a>
+            <a href="/updateUser" type="button" class="btn btn-sm btn-warning">update</a>
+            <a href="/deleteUser" type="button" class="btn btn-sm btn-danger">delete</a>
         </h3>
     </c:if>
 

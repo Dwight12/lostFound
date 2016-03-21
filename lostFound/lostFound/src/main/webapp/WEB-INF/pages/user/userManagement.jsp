@@ -21,11 +21,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>博客系统-用户管理</h1>
-    <hr/>
 
-    <h3>所有用户 <a href="/addUser" type="button" class="btn btn-primary btn-sm">添加</a></h3>
-    <h3>登录 <a href="/login" type="button" class="btn btn-primary btn-sm">登录</a></h3>
+    <h3><a href="/addUser" type="button" class="btn btn-primary btn-sm">添加</a></h3>
     <!-- 如果用户列表为空 -->
     <c:if test="${empty userList}">
         <div class="alert alert-warning" role="alert">
@@ -51,8 +48,6 @@
                     <td>${user.firstName} ${user.lastName}</td>
                     <td>${user.password}</td>
                     <td>
-                        <a href="/showUser/${user.id}" type="button" class="btn btn-sm btn-success">详情</a>
-                        <a href="/updateUser/${user.id}" type="button" class="btn btn-sm btn-warning">修改</a>
                         <a href="/deleteUser/${user.id}" type="button" class="btn btn-sm btn-danger">删除</a>
                     </td>
                 </tr>

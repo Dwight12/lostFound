@@ -4,10 +4,8 @@ import Kikyou.model.BlogEntity;
 import Kikyou.model.UserEntity;
 import Kikyou.repository.BlogRepository;
 import Kikyou.repository.UserRepository;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,23 +50,19 @@ public class MyController {
 
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
     public String addUser(){
-        return "user/addUser";
+        return "register/addUser";
     }
 
     @RequestMapping(value = "/addUserPost", method = RequestMethod.POST)
-    public String addUserPost(@ModelAttribute("user") UserEntity userEntity){
+    public String addUserPost(@ModelAttribute("userMessage") UserEntity userEntity){
 
         userRepository.saveAndFlush(userEntity);
 
-        return "redirect:/users";
+        return "register/login";
     }
 
     @RequestMapping(value = "/showUser", method = RequestMethod.GET)
     public String showUser(@ModelAttribute("user") UserEntity userEntity){
-        //@PathVariable("userId")  Integer userId, ModelMap modelMap
-        //UserEntity userEntity = userRepository.findOne(userId);
-        //modelMap.addAttribute("user", userEntity);
-
         return "user/userDetail";
     }
 
@@ -101,6 +95,15 @@ public class MyController {
         userRepository.flush();
 
         return "redirect:/register/login";
+    }
+
+    @RequestMapping(value = "/deleteUser/{userId}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable("userId") Integer userId){
+
+        userRepository.delete(userId);
+        userRepository.flush();
+
+        return "redirect:/users";
     }
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
